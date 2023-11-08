@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 namespace Movies_Database
 {
     public partial class Form1 : Form
@@ -158,6 +160,7 @@ namespace Movies_Database
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            // If the link in the forth collumn is pressed, open it
             if (e.ColumnIndex == 4)
             {
                 var row = dataGridView1.Rows[e.RowIndex];
@@ -185,10 +188,22 @@ namespace Movies_Database
 
         private void button3_Click(object sender, EventArgs e)
         {
+            string keyword = textBox1.Text;
+            if (keyword == "")
+            {
+                MessageBox.Show("Neįvestas raktažodis");
+                return;
+            }
+            string cat = comboBox1.SelectedItem == null ? String.Empty : comboBox1.SelectedItem.ToString();
+            if (cat == "")
+            {
+                MessageBox.Show("Nepasirinkta kategorija");
+                return;
+            }
+            
             string[] categories = { "title", "year", "tags" };
             string selectedCategorie = categories[comboBox1.SelectedIndex].ToString();
             Console.WriteLine(selectedCategorie);
-            string keyword = textBox1.Text;
             MySqlConnection mySqlconn = new MySqlConnection(connection);
             mySqlconn.Open();
             GetRecords(mySqlconn, selectedCategorie, keyword);

@@ -146,29 +146,50 @@ namespace Movies_Database
             MySqlDataReader records = dbcommand.ExecuteReader();
             while (records.Read())
             {
-
+                string id = records["id"].ToString();
                 string title = records["title"].ToString();
                 int year = (int)records["year"];
                 int rating = (int)records["rating"];
                 string tags = records["tags"].ToString();
                 string imdb = records["imdb_link"].ToString();
+                
 
-                dataGridView1.Rows.Add(title, year, rating, tags, imdb);
+                dataGridView1.Rows.Add(title, year, rating, tags, imdb, id);
 
             }
             records.Close();
         }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (e.ColumnIndex == 0)
+                {
+                 
+                    var row = dataGridView1.Rows[e.RowIndex];
+                    if (row.Cells[5].Value == null) return;
+                    string id_value = row.Cells[5].Value.ToString();
+                    ShowMore(id_value);
+                }
+            }
+        }
+
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             // If the link in the forth collumn is pressed, open it
             if (e.ColumnIndex == 4)
             {
                 var row = dataGridView1.Rows[e.RowIndex];
-                if (row.Cells[4].Value == null) return;
+                
                 var url = row.Cells[4].Value.ToString();
                 System.Diagnostics.Process.Start(url);
             }
+
+            
         }
+
+      
 
        public void PopulateCategoryComboBox()
         {
@@ -208,6 +229,25 @@ namespace Movies_Database
             mySqlconn.Open();
             GetRecords(mySqlconn, selectedCategorie, keyword);
             mySqlconn.Close();
+        }
+
+        public void ShowMore(string id) 
+        {
+            if (id == "")
+            {
+                MessageBox.Show("Nepasirinktas joks filmas ar serialas");
+            }
+            MySqlConnection mySqlconn = new MySqlConnection(connection);
+            mySqlconn.Open();
+            MySqlCommand dbcommand = mySqlconn.CreateCommand();
+            dbcommand.CommandText = "SELECT * FROM movies WHERE id=@id";
+            dbcommand.Parameters.AddWithValue("@id", id);
+            MySqlDataReader record = dbcommand.ExecuteReader();
+            record.Read();
+            Console.WriteLine(record["id"].ToString());
+            label3.Text = record["title"].ToString();
+            textBox3.Text = record["text"].ToString();
+
         }
 
     }

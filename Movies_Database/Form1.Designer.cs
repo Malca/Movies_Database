@@ -1,4 +1,7 @@
-﻿namespace Movies_Database
+﻿using System;
+using System.Windows.Forms;
+
+namespace Movies_Database
 {
     partial class Form1
     {
@@ -43,7 +46,11 @@
             this.personal_rating = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.genre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imdb_link = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.movie_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel3.SuspendLayout();
@@ -53,6 +60,8 @@
             // 
             this.panel1.AutoScroll = true;
             this.panel1.AutoScrollMargin = new System.Drawing.Size(12, 12);
+            this.panel1.Controls.Add(this.textBox3);
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Margin = new System.Windows.Forms.Padding(50);
@@ -148,13 +157,15 @@
             this.year,
             this.personal_rating,
             this.genre,
-            this.imdb_link});
+            this.imdb_link,
+            this.movie_id});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 60);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView1.Size = new System.Drawing.Size(1064, 543);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // name
@@ -185,6 +196,13 @@
             this.imdb_link.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.imdb_link.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // movie_id
+            // 
+            this.movie_id.HeaderText = "id";
+            this.movie_id.Name = "movie_id";
+            this.movie_id.ReadOnly = true;
+            this.movie_id.Visible = false;
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.button4);
@@ -200,6 +218,25 @@
             this.panel3.Size = new System.Drawing.Size(1064, 60);
             this.panel3.TabIndex = 2;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(132, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "label3";
+            // 
+            // textBox3
+            // 
+            this.textBox3.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Location = new System.Drawing.Point(34, 101);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(244, 364);
+            this.textBox3.TabIndex = 1;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,6 +250,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Asmeninė peržiūrėtų filmų / serialų duomenų bazė";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel3.ResumeLayout(false);
@@ -220,6 +259,8 @@
             this.ResumeLayout(false);
 
         }
+
+        
 
         #endregion
 
@@ -230,11 +271,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn year;
-        private System.Windows.Forms.DataGridViewTextBoxColumn personal_rating;
-        private System.Windows.Forms.DataGridViewTextBoxColumn genre;
-        private System.Windows.Forms.DataGridViewLinkColumn imdb_link;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
@@ -243,6 +279,14 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn year;
+        private System.Windows.Forms.DataGridViewTextBoxColumn personal_rating;
+        private System.Windows.Forms.DataGridViewTextBoxColumn genre;
+        private System.Windows.Forms.DataGridViewLinkColumn imdb_link;
+        private System.Windows.Forms.DataGridViewTextBoxColumn movie_id;
+        private TextBox textBox3;
+        private Label label3;
     }
 }
 

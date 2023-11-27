@@ -11,19 +11,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Net.Http;
+using PuppeteerSharp;
+using Newtonsoft.Json;
 
 namespace Movies_Database
 {
     public partial class Form1 : Form
     {
-        public static string connection = "Server=localhost;Database=filmai;Uid=root;pwd=fortesting;charset=utf8mb4";
+        
+        public static string connection = "Server=SERVER_HOST;Database=DATABASE_NAME;Uid=LOGINID;pwd=PASSWORD;charset=utf8mb4";
 
 
         public Form1()
         {
 
 
-            InitializeComponent();
+            
 
             if (checkDB_Connection() != true)
             {
@@ -34,30 +38,31 @@ namespace Movies_Database
 
             }
             else
-            { 
-                
-            MySqlConnection mySqlconn = new MySqlConnection(connection);
-            mySqlconn.Open();
-            GetRecords(mySqlconn);
-            mySqlconn.Close();
+            {
+                InitializeComponent();
+                MySqlConnection mySqlconn = new MySqlConnection(connection);
+                mySqlconn.Open();
+                GetRecords(mySqlconn);
+                mySqlconn.Close();
 
                 if (!System.Windows.Forms.SystemInformation.TerminalServerSession)
-            {
-                Type dgvType = dataGridView1.GetType();
-                PropertyInfo pi = dgvType.GetProperty("DoubleBuffered",
-                    BindingFlags.Instance | BindingFlags.NonPublic);
-                pi.SetValue(dataGridView1, true, null);
-            }
-            
+                {
+                    Type dgvType = dataGridView1.GetType();
+                    PropertyInfo pi = dgvType.GetProperty("DoubleBuffered",
+                        BindingFlags.Instance | BindingFlags.NonPublic);
+                    pi.SetValue(dataGridView1, true, null);
+                }
+
 
 
             }
         }
 
-        
+
 
         private void Form1_Load(object sender, EventArgs e)
-        {
+        {   
+            // As the function name states, it populates a dropdown field with an options
             PopulateCategoryComboBox();
         }
 
@@ -134,8 +139,6 @@ namespace Movies_Database
                 }
                 dbcommand.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
 
-
-
             }
             else
             {
@@ -152,7 +155,7 @@ namespace Movies_Database
                 int rating = (int)records["rating"];
                 string tags = records["tags"].ToString();
                 string imdb = records["imdb_link"].ToString();
-                
+
 
                 dataGridView1.Rows.Add(title, year, rating, tags, imdb, id);
 
@@ -160,13 +163,14 @@ namespace Movies_Database
             records.Close();
         }
 
+        // Checks if a cell with a moviw name is pressed and displays more info on the left side of the window
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 if (e.ColumnIndex == 0)
                 {
-                 
+
                     var row = dataGridView1.Rows[e.RowIndex];
                     if (row.Cells[5].Value == null) return;
                     string id_value = row.Cells[5].Value.ToString();
@@ -174,29 +178,29 @@ namespace Movies_Database
                 }
             }
         }
-
+        // Checks if a Link collumn is preseed and opens the link in a browser
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // If the link in the forth collumn is pressed, open it
+            
             if (e.ColumnIndex == 4)
             {
                 var row = dataGridView1.Rows[e.RowIndex];
-                
+
                 var url = row.Cells[4].Value.ToString();
                 System.Diagnostics.Process.Start(url);
             }
 
-            
+
         }
 
-      
 
-       public void PopulateCategoryComboBox()
+
+        public void PopulateCategoryComboBox()
         {
             comboBox1.Items.Add(dataGridView1.Columns[0].HeaderText);
             comboBox1.Items.Add(dataGridView1.Columns[1].HeaderText);
             comboBox1.Items.Add(dataGridView1.Columns[3].HeaderText);
-    
+
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -221,7 +225,7 @@ namespace Movies_Database
                 MessageBox.Show("Nepasirinkta kategorija");
                 return;
             }
-            
+
             string[] categories = { "title", "year", "tags" };
             string selectedCategorie = categories[comboBox1.SelectedIndex].ToString();
             Console.WriteLine(selectedCategorie);
@@ -231,7 +235,7 @@ namespace Movies_Database
             mySqlconn.Close();
         }
 
-        public void ShowMore(string id) 
+        public void ShowMore(string id)
         {
             if (id == "")
             {
@@ -247,8 +251,30 @@ namespace Movies_Database
             Console.WriteLine(record["id"].ToString());
             label3.Text = record["title"].ToString();
             textBox3.Text = record["text"].ToString();
+            string pic = "http://arturasm.lt/" + record["photo"].ToString();
+            pictureBox1.Load(pic);
 
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Form2 f = new Form2();
+            f.ShowDialog();
+
+
+        }
+
+   
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == System.Windows.Forms.Keys.Enter)
+            {
+               button3_Click(sender, e);
+            }
+        }
+        
+
+        
     }
 }

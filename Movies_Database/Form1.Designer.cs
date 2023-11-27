@@ -32,6 +32,9 @@ namespace Movies_Database
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
@@ -48,9 +51,9 @@ namespace Movies_Database
             this.imdb_link = new System.Windows.Forms.DataGridViewLinkColumn();
             this.movie_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel3.SuspendLayout();
@@ -60,6 +63,7 @@ namespace Movies_Database
             // 
             this.panel1.AutoScroll = true;
             this.panel1.AutoScrollMargin = new System.Drawing.Size(12, 12);
+            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.textBox3);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -69,6 +73,39 @@ namespace Movies_Database
             this.panel1.Padding = new System.Windows.Forms.Padding(12);
             this.panel1.Size = new System.Drawing.Size(327, 603);
             this.panel1.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.ImageLocation = "";
+            this.pictureBox1.Location = new System.Drawing.Point(37, 60);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(244, 240);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
+            // textBox3
+            // 
+            this.textBox3.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.Location = new System.Drawing.Point(37, 333);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
+            this.textBox3.Size = new System.Drawing.Size(244, 201);
+            this.textBox3.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(12, 12);
+            this.label3.Margin = new System.Windows.Forms.Padding(0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(303, 25);
+            this.label3.TabIndex = 0;
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
@@ -95,7 +132,7 @@ namespace Movies_Database
             this.button4.Location = new System.Drawing.Point(635, 24);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(112, 20);
-            this.button4.TabIndex = 5;
+            this.button4.TabIndex = 6;
             this.button4.Text = "Rodyti visus įrašus";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
@@ -116,6 +153,7 @@ namespace Movies_Database
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(184, 20);
             this.textBox1.TabIndex = 4;
+            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
             // comboBox1
             // 
@@ -149,8 +187,10 @@ namespace Movies_Database
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.name,
@@ -162,7 +202,9 @@ namespace Movies_Database
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 60);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.Size = new System.Drawing.Size(1064, 543);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -172,27 +214,32 @@ namespace Movies_Database
             // 
             this.name.HeaderText = "Pavadinimas";
             this.name.Name = "name";
+            this.name.ReadOnly = true;
             // 
             // year
             // 
             this.year.HeaderText = "Išleidimo metai";
             this.year.Name = "year";
+            this.year.ReadOnly = true;
             // 
             // personal_rating
             // 
             this.personal_rating.HeaderText = "Patiko (1-10)";
             this.personal_rating.Name = "personal_rating";
+            this.personal_rating.ReadOnly = true;
             // 
             // genre
             // 
             this.genre.HeaderText = "Žanras";
             this.genre.Name = "genre";
+            this.genre.ReadOnly = true;
             this.genre.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // imdb_link
             // 
             this.imdb_link.HeaderText = "IMDB";
             this.imdb_link.Name = "imdb_link";
+            this.imdb_link.ReadOnly = true;
             this.imdb_link.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.imdb_link.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
@@ -205,6 +252,7 @@ namespace Movies_Database
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.button5);
             this.panel3.Controls.Add(this.button4);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.textBox2);
@@ -218,24 +266,15 @@ namespace Movies_Database
             this.panel3.Size = new System.Drawing.Size(1064, 60);
             this.panel3.TabIndex = 2;
             // 
-            // label3
+            // button5
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(132, 47);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "label3";
-            // 
-            // textBox3
-            // 
-            this.textBox3.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Location = new System.Drawing.Point(34, 101);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(244, 364);
-            this.textBox3.TabIndex = 1;
+            this.button5.Location = new System.Drawing.Point(778, 24);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(99, 20);
+            this.button5.TabIndex = 7;
+            this.button5.Text = "Naujas įrašas";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
@@ -252,6 +291,7 @@ namespace Movies_Database
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel3.ResumeLayout(false);
@@ -287,6 +327,8 @@ namespace Movies_Database
         private System.Windows.Forms.DataGridViewTextBoxColumn movie_id;
         private TextBox textBox3;
         private Label label3;
+        private PictureBox pictureBox1;
+        private Button button5;
     }
 }
 

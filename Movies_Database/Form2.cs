@@ -24,8 +24,7 @@ namespace Movies_Database
     public partial class Form2 : Form
     {
 
-        //public static string connection = "Server=localhost;Database=filmai;Uid=root;pwd=fortesting;charset=utf8mb4";
-        public static string connection = "Server=haskis.serveriai.lt;Database=arrasm_movies;Uid=arrasm;pwd=9s8gT6NKW6rKyb7W;charset=utf8mb4";
+        public static string connection = "Server=SERVER_HOST;Database=DATABASE_NAME;Uid=LOGINID;pwd=PASSWORD;charset=utf8mb4";
         public Form2()
         {
             InitializeComponent();
